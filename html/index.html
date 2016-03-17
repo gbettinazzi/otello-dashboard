@@ -6,15 +6,16 @@
 <title>Otello Login</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/datepicker3.css" rel="stylesheet">
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
+<link  href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link  href="images/favicon.ico" rel="icon" type="image/x-icon">
 	<!-- PARSE -->
-	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+<script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>
 
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-<link rel="icon" href="images/favicon.ico" type="image/x-icon">
 <script src="js/respond.min.js"></script>
 <![endif]-->
 
@@ -22,11 +23,21 @@
 
 <body style="background-color: #ffffff">
 
+    <div class="pre-loader" id="preloader">
+        <div class="load-con">
+			<img src="images/otelloLoader.png"  style="width: 20%;height: 20%" class="animated fadeInDown" alt="">
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+        </div>
+    </div>
 	<div class="row">
 		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 			<div class="login-panel panel panel-default">
 				<img src="images/otello.png"  style="width: 50%;margin-left: 25%"/>
-
+				<h2 style="margin-left: 15%">Accedi alla dashboards</h2>
 
 				<div class="panel-body">
 
@@ -40,18 +51,20 @@
 							</div>
 
 							<a href="#" id="loginButton" class="btn btn-primary" style="width: 100%">Login</a>
+
 						</fieldset>
 					</form>
 				</div>
 			</div>
 		</div><!-- /.col-->
-	</div><!-- /.row -->	
-	
-		
+	</div><!-- /.row -->
+
+	<div class="modal"><!-- Place at bottom of page --></div>
 
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
+   <script src="js/index.js"></script>
 	<script src="js/chart-data.js"></script>
 	<script src="js/easypiechart.js"></script>
 	<script src="js/easypiechart-data.js"></script>
@@ -59,30 +72,54 @@
 
 	<script>
 
-
+		$(document).ready(function() {
+			appMaster.preLoader();
+		});
 		$( "#loginButton" ).click(function() {
 			Parse.initialize('waWFtH73b4CqvFdELBjx4yyMIMvSgeZpx9uqKl1N','ItBtIyyyTg8gP7jJdnB4pHKlab8JfbTs3z7pc9Fu');
 
 			user = $( "#email" ).val();
 			password = $( "#password" ).val();
-
+			$( "#preloader").show();
 
 			Parse.User.logIn(user, password, {
 				success: function(user) {
 					// Do stuff after successful login.
+					$( "#preloader").hide();
 					window.open("file:///Users/giovanni/GitProjects/otello-dashboard/html/dashboard.html","_self");
 				},
 				error: function(user, error) {
+					$( "#preloader").hide();
+					$('#myModal').modal('toggle');
 					// The login failed. Check error to see why.
-					alert('credenziali non valide');
+
+
+
 				}
 			});
 		});
 
+	</script>
 
+	<div class="modal fade" id="myModal" style="margin-top: 15%	" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" style="font-size:19pt;">
+						<i class="fa fa-exclamation-triangle"></i>
+						Attenzione</h4>
+				</div>
+				<div class="modal-body">
+					<p style="font-size:15pt;">Errore nelle credenziali inserite. Per favore inserisci delle credenziali valide e rienta
+					</p>
 
+				</div>
+				
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
-	</script>	
 </body>
 
 </html>
