@@ -82,6 +82,7 @@
 			password = $( "#password" ).val();
 			$( "#preloader").show();
 
+
 			Parse.User.logIn(user, password, {
 				success: function(user) {
 					// Do stuff after successful login.
